@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   UserPlus,
   Stethoscope,
@@ -132,12 +132,12 @@ function Index() {
               </p>
             </div>
           </div>
-          <a
-            href="#cta"
+          <Link
+            to="/auth"
             className="rounded-full glass px-4 py-2 text-[13px] font-semibold text-brand-deep shadow-md shadow-brand/10 transition-transform hover:scale-105"
           >
-            Запросить демо
-          </a>
+            Войти в систему
+          </Link>
         </div>
       </header>
 
