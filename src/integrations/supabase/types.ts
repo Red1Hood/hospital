@@ -14,6 +14,51 @@ export type Database = {
   }
   public: {
     Tables: {
+      appointments: {
+        Row: {
+          created_at: string
+          created_by: string
+          doctor_id: string
+          id: string
+          patient_id: string
+          scheduled_at: string
+          status: Database["public"]["Enums"]["appointment_status"]
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string
+          doctor_id: string
+          id?: string
+          patient_id: string
+          scheduled_at: string
+          status?: Database["public"]["Enums"]["appointment_status"]
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          doctor_id?: string
+          id?: string
+          patient_id?: string
+          scheduled_at?: string
+          status?: Database["public"]["Enums"]["appointment_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "appointments_doctor_id_fkey"
+            columns: ["doctor_id"]
+            isOneToOne: false
+            referencedRelation: "doctors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "appointments_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       audit_log: {
         Row: {
           action: string
@@ -40,6 +85,94 @@ export type Database = {
           user_id?: string | null
         }
         Relationships: []
+      }
+      departments: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
+      doctor_schedules: {
+        Row: {
+          doctor_id: string
+          end_time: string
+          id: string
+          slot_minutes: number
+          start_time: string
+          weekday: number
+        }
+        Insert: {
+          doctor_id: string
+          end_time: string
+          id?: string
+          slot_minutes?: number
+          start_time: string
+          weekday: number
+        }
+        Update: {
+          doctor_id?: string
+          end_time?: string
+          id?: string
+          slot_minutes?: number
+          start_time?: string
+          weekday?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "doctor_schedules_doctor_id_fkey"
+            columns: ["doctor_id"]
+            isOneToOne: false
+            referencedRelation: "doctors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      doctors: {
+        Row: {
+          created_at: string
+          department_id: string | null
+          full_name: string
+          id: string
+          specialty: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          department_id?: string | null
+          full_name: string
+          id?: string
+          specialty: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          department_id?: string | null
+          full_name?: string
+          id?: string
+          specialty?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "doctors_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       patients: {
         Row: {
@@ -118,6 +251,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      get_busy_slots: {
+        Args: { _doctor_id: string; _from: string; _to: string }
+        Returns: string[]
+      }
       has_any_role: {
         Args: {
           _roles: Database["public"]["Enums"]["app_role"][]
@@ -132,6 +269,8 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_own_doctor: { Args: { _doctor_id: string }; Returns: boolean }
+      is_own_patient: { Args: { _patient_id: string }; Returns: boolean }
     }
     Enums: {
       app_role:
@@ -142,6 +281,15 @@ export type Database = {
         | "admin"
         | "manager"
         | "patient"
+      appointment_status:
+        | "created"
+        | "confirmed"
+        | "waiting"
+        | "in_progress"
+        | "completed"
+        | "cancelled"
+        | "no_show"
+        | "rescheduled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -277,6 +425,16 @@ export const Constants = {
         "admin",
         "manager",
         "patient",
+      ],
+      appointment_status: [
+        "created",
+        "confirmed",
+        "waiting",
+        "in_progress",
+        "completed",
+        "cancelled",
+        "no_show",
+        "rescheduled",
       ],
     },
   },

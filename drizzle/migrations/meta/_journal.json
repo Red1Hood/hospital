@@ -8,6 +8,13 @@
       "when": 1791048734130,
       "tag": "0000_auth_roles_patients",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791049126798,
+      "tag": "0001_doctors_schedule_appointments",
+      "breakpoints": true
     }
   ]
 }
