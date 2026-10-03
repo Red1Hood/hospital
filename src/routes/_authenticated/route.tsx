@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, redirect, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { LayoutDashboard, Users, UserCog, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, UserCog, LogOut, Stethoscope, CalendarPlus, ClipboardList } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { ROLE_LABELS, hasAny, type AppRole } from "@/lib/roles";
 
@@ -22,6 +22,9 @@ export const Route = createFileRoute("/_authenticated")({
 const NAV: { to: string; label: string; icon: typeof Users; roles: AppRole[] | null }[] = [
   { to: "/dashboard", label: "Главная", icon: LayoutDashboard, roles: null },
   { to: "/patients", label: "Пациенты", icon: Users, roles: ["registrar", "admin"] },
+  { to: "/booking", label: "Запись на приём", icon: CalendarPlus, roles: ["registrar", "admin", "patient"] },
+  { to: "/my-appointments", label: "Мои приёмы", icon: ClipboardList, roles: ["doctor"] },
+  { to: "/doctors", label: "Врачи и отделения", icon: Stethoscope, roles: ["admin"] },
   { to: "/users", label: "Пользователи", icon: UserCog, roles: ["admin"] },
 ];
 
@@ -42,7 +45,7 @@ function Layout() {
       <header className="border-b border-border/60 glass sticky top-0 z-20">
         <div className="mx-auto max-w-6xl px-5 py-3 flex items-center gap-6">
           <Link to="/dashboard" className="font-display font-bold">Больница<span className="text-brand">.АИС</span></Link>
-          <nav className="flex gap-1 flex-1">
+          <nav className="flex flex-wrap gap-1 flex-1">
             {NAV.filter((n) => !n.roles || hasAny(roles, n.roles)).map((n) => (
               <Link key={n.to} to={n.to} className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-muted-foreground hover:text-foreground" activeProps={{ className: "bg-brand/10 text-brand-deep font-semibold" }}>
                 <n.icon className="size-4" />{n.label}

@@ -14,3 +14,5 @@
 - Signed-in pages live under `src/routes/_authenticated/`; the layout loads user + roles into route context and filters nav by role.
 - Data access uses the browser Supabase client directly; RLS policies are the security boundary.
 - Signup trigger: first user becomes admin; later users become patients with a linked `patients` row.
+- Double booking is prevented by a partial unique index on appointments(doctor_id, scheduled_at) excluding cancelled/rescheduled; free slots come from doctor_schedules minus the security-definer get_busy_slots RPC.
+- Doctors link to login accounts via doctors.user_id; doctor-scoped RLS uses is_own_doctor/is_own_patient helpers.
