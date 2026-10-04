@@ -18,6 +18,7 @@ import { Route as AuthenticatedDoctorsRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedMyAppointmentsRouteImport } from './routes/_authenticated/my-appointments'
 import { Route as AuthenticatedPatientsRouteImport } from './routes/_authenticated/patients'
 import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
+import { Route as AuthenticatedVisitAppointmentIdRouteImport } from './routes/_authenticated/visit.$appointmentId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,6 +65,12 @@ const AuthenticatedUsersRoute = AuthenticatedUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedVisitAppointmentIdRoute =
+  AuthenticatedVisitAppointmentIdRouteImport.update({
+    id: '/visit/$appointmentId',
+    path: '/visit/$appointmentId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/my-appointments': typeof AuthenticatedMyAppointmentsRoute
   '/patients': typeof AuthenticatedPatientsRoute
   '/users': typeof AuthenticatedUsersRoute
+  '/visit/$appointmentId': typeof AuthenticatedVisitAppointmentIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -84,6 +92,7 @@ export interface FileRoutesByTo {
   '/my-appointments': typeof AuthenticatedMyAppointmentsRoute
   '/patients': typeof AuthenticatedPatientsRoute
   '/users': typeof AuthenticatedUsersRoute
+  '/visit/$appointmentId': typeof AuthenticatedVisitAppointmentIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -96,6 +105,7 @@ export interface FileRoutesById {
   '/_authenticated/my-appointments': typeof AuthenticatedMyAppointmentsRoute
   '/_authenticated/patients': typeof AuthenticatedPatientsRoute
   '/_authenticated/users': typeof AuthenticatedUsersRoute
+  '/_authenticated/visit/$appointmentId': typeof AuthenticatedVisitAppointmentIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -108,6 +118,7 @@ export interface FileRouteTypes {
     | '/my-appointments'
     | '/patients'
     | '/users'
+    | '/visit/$appointmentId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -118,6 +129,7 @@ export interface FileRouteTypes {
     | '/my-appointments'
     | '/patients'
     | '/users'
+    | '/visit/$appointmentId'
   id:
     | '__root__'
     | '/'
@@ -129,6 +141,7 @@ export interface FileRouteTypes {
     | '/_authenticated/my-appointments'
     | '/_authenticated/patients'
     | '/_authenticated/users'
+    | '/_authenticated/visit/$appointmentId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -202,6 +215,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUsersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/visit/$appointmentId': {
+      id: '/_authenticated/visit/$appointmentId'
+      path: '/visit/$appointmentId'
+      fullPath: '/visit/$appointmentId'
+      preLoaderRoute: typeof AuthenticatedVisitAppointmentIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -212,6 +232,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedMyAppointmentsRoute: typeof AuthenticatedMyAppointmentsRoute
   AuthenticatedPatientsRoute: typeof AuthenticatedPatientsRoute
   AuthenticatedUsersRoute: typeof AuthenticatedUsersRoute
+  AuthenticatedVisitAppointmentIdRoute: typeof AuthenticatedVisitAppointmentIdRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -221,6 +242,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMyAppointmentsRoute: AuthenticatedMyAppointmentsRoute,
   AuthenticatedPatientsRoute: AuthenticatedPatientsRoute,
   AuthenticatedUsersRoute: AuthenticatedUsersRoute,
+  AuthenticatedVisitAppointmentIdRoute: AuthenticatedVisitAppointmentIdRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
