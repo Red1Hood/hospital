@@ -15,6 +15,13 @@
       "when": 1791049126798,
       "tag": "0001_doctors_schedule_appointments",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791136982601,
+      "tag": "0002_cancel_my_appointment",
+      "breakpoints": true
     }
   ]
 }

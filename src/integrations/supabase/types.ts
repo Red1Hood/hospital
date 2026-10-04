@@ -251,6 +251,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      cancel_my_appointment: { Args: { _id: string }; Returns: undefined }
       get_busy_slots: {
         Args: { _doctor_id: string; _from: string; _to: string }
         Returns: string[]
