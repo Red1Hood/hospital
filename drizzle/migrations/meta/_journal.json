@@ -22,6 +22,13 @@
       "when": 1791136982601,
       "tag": "0002_cancel_my_appointment",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791137052494,
+      "tag": "0003_medical_visits",
+      "breakpoints": true
     }
   ]
 }

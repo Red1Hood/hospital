@@ -174,6 +174,47 @@ export type Database = {
           },
         ]
       }
+      medical_visits: {
+        Row: {
+          appointment_id: string
+          complaints: string | null
+          created_at: string
+          diagnosis: string | null
+          examination: string | null
+          id: string
+          recommendations: string | null
+          updated_at: string
+        }
+        Insert: {
+          appointment_id: string
+          complaints?: string | null
+          created_at?: string
+          diagnosis?: string | null
+          examination?: string | null
+          id?: string
+          recommendations?: string | null
+          updated_at?: string
+        }
+        Update: {
+          appointment_id?: string
+          complaints?: string | null
+          created_at?: string
+          diagnosis?: string | null
+          examination?: string | null
+          id?: string
+          recommendations?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medical_visits_appointment_id_fkey"
+            columns: ["appointment_id"]
+            isOneToOne: true
+            referencedRelation: "appointments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       patients: {
         Row: {
           address: string | null
@@ -251,7 +292,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      appt_patient: { Args: { _appointment_id: string }; Returns: string }
+      can_view_medcard: { Args: { _patient_id: string }; Returns: boolean }
       cancel_my_appointment: { Args: { _id: string }; Returns: undefined }
+      doctor_has_patient: { Args: { _patient_id: string }; Returns: boolean }
       get_busy_slots: {
         Args: { _doctor_id: string; _from: string; _to: string }
         Returns: string[]
@@ -270,6 +314,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      is_appt_doctor: { Args: { _appointment_id: string }; Returns: boolean }
       is_own_doctor: { Args: { _doctor_id: string }; Returns: boolean }
       is_own_patient: { Args: { _patient_id: string }; Returns: boolean }
     }
