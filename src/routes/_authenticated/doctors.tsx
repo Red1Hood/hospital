@@ -156,12 +156,12 @@ function ScheduleDialog({ doctorId, existing, onClose }: { doctorId: string; exi
 
   async function save() {
     const del = await supabase.from("doctor_schedules").delete().eq("doctor_id", doctorId);
-    if (del.error) return toast.error(del.error.message);
+    if (del.error) { toast.error(del.error.message); return; }
     const ins = rows.map((r, i) => ({ ...r, weekday: i + 1 })).filter((r) => r.on)
       .map((r) => ({ doctor_id: doctorId, weekday: r.weekday, start_time: r.start, end_time: r.end, slot_minutes: r.slot }));
     if (ins.length) {
       const { error } = await supabase.from("doctor_schedules").insert(ins);
-      if (error) return toast.error(error.message);
+      if (error) { toast.error(error.message); return; }
     }
     toast.success("График сохранён");
     onClose();

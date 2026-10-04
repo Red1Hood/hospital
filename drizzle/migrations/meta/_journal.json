@@ -15,6 +15,27 @@
       "when": 1791049126798,
       "tag": "0001_doctors_schedule_appointments",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791136982601,
+      "tag": "0002_cancel_my_appointment",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791137052494,
+      "tag": "0003_medical_visits",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791137118110,
+      "tag": "0004_referrals_lab_results",
+      "breakpoints": true
     }
   ]
 }

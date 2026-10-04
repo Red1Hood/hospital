@@ -85,7 +85,10 @@ function BookingPage() {
   });
 
   async function book(slot: Date) {
-    if (!effectivePatient) return toast.error(isStaff ? "Выберите пациента" : "Карточка пациента не найдена");
+    if (!effectivePatient) {
+      toast.error(isStaff ? "Выберите пациента" : "Карточка пациента не найдена");
+      return;
+    }
     const { error } = await supabase.from("appointments").insert({ patient_id: effectivePatient, doctor_id: doctorId, scheduled_at: slot.toISOString(), created_by: user.id });
     if (error) {
       toast.error(error.code === "23505" ? "Это время уже занято — выберите другое" : error.message);
@@ -97,9 +100,11 @@ function BookingPage() {
   }
 
   async function cancel(id: string) {
-    const { error } = await supabase.from("appointments").update({ status: "cancelled" }).eq("id", id);
+    const { error } = await supabase.rpc("cancel_my_appointment", { _id: id });
     if (error) toast.error(error.message);
+    else toast.success("Запись отменена");
     qc.invalidateQueries({ queryKey: ["my-appts"] });
+    qc.invalidateQueries({ queryKey: ["busy"] });
   }
 
   if (!canBook) return <p>Нет доступа к этому разделу.</p>;
@@ -159,13 +164,17 @@ function BookingPage() {
                   <p className="font-semibold">{new Date(a.scheduled_at).toLocaleString("ru-RU", { dateStyle: "long", timeStyle: "short" })}</p>
                   <p className="text-xs text-muted-foreground">{a.doctors?.full_name} · {a.doctors?.specialty}</p>
                 </div>
-                <span className="text-xs rounded-full bg-brand/10 text-brand-deep px-2.5 py-1">{STATUS_LABELS[a.status]}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs rounded-full bg-brand/10 text-brand-deep px-2.5 py-1">{STATUS_LABELS[a.status]}</span>
+                  {["created", "confirmed"].includes(a.status) && new Date(a.scheduled_at) > new Date() && (
+                    <Button size="sm" variant="ghost" onClick={() => cancel(a.id)}>Отменить</Button>
+                  )}
+                </div>
               </div>
             ))}
           </div>
         </div>
       )}
-      {isStaff && <span className="hidden">{String(!!cancel)}</span>}
     </div>
   );
 }

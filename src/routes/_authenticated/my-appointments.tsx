@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -58,6 +58,9 @@ function MyAppointments() {
               <p className="font-semibold">{a.patients?.full_name}</p>
               <p className="text-xs text-muted-foreground">{a.patients?.phone || ""}</p>
             </div>
+            <Link to="/visit/$appointmentId" params={{ appointmentId: a.id }} className="rounded-lg bg-brand px-3 py-1.5 text-xs font-semibold text-primary-foreground">
+              {a.status === "completed" ? "Открыть приём" : "Начать приём"}
+            </Link>
             <select className="h-8 rounded-md border border-input bg-background px-2 text-xs" value={a.status} onChange={(e) => setStatus(a.id, e.target.value as Status)}>
               {Object.entries(STATUS_LABELS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}
             </select>
