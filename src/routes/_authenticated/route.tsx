@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, redirect, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { LayoutDashboard, Users, UserCog, LogOut, Stethoscope, CalendarPlus, ClipboardList } from "lucide-react";
+import { LayoutDashboard, Users, UserCog, LogOut, Stethoscope, CalendarPlus, ClipboardList, FolderHeart, FlaskConical, BedDouble, BarChart3 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { ROLE_LABELS, hasAny, type AppRole } from "@/lib/roles";
 
@@ -24,6 +24,8 @@ const NAV: { to: string; label: string; icon: typeof Users; roles: AppRole[] | n
   { to: "/patients", label: "Пациенты", icon: Users, roles: ["registrar", "admin"] },
   { to: "/booking", label: "Запись на приём", icon: CalendarPlus, roles: ["registrar", "admin", "patient"] },
   { to: "/my-appointments", label: "Мои приёмы", icon: ClipboardList, roles: ["doctor"] },
+  { to: "/medcard", label: "Медкарты", icon: FolderHeart, roles: ["doctor", "nurse", "admin", "patient"] },
+  { to: "/lab", label: "Лаборатория", icon: FlaskConical, roles: ["lab"] },
   { to: "/doctors", label: "Врачи и отделения", icon: Stethoscope, roles: ["admin"] },
   { to: "/users", label: "Пользователи", icon: UserCog, roles: ["admin"] },
 ];
