@@ -174,6 +174,41 @@ export type Database = {
           },
         ]
       }
+      lab_results: {
+        Row: {
+          created_at: string
+          entered_by: string
+          id: string
+          referral_id: string
+          result_file_url: string | null
+          result_text: string | null
+        }
+        Insert: {
+          created_at?: string
+          entered_by?: string
+          id?: string
+          referral_id: string
+          result_file_url?: string | null
+          result_text?: string | null
+        }
+        Update: {
+          created_at?: string
+          entered_by?: string
+          id?: string
+          referral_id?: string
+          result_file_url?: string | null
+          result_text?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lab_results_referral_id_fkey"
+            columns: ["referral_id"]
+            isOneToOne: false
+            referencedRelation: "referrals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       medical_visits: {
         Row: {
           appointment_id: string
@@ -269,6 +304,61 @@ export type Database = {
         }
         Relationships: []
       }
+      referrals: {
+        Row: {
+          appointment_id: string | null
+          comment: string | null
+          created_at: string
+          doctor_id: string
+          id: string
+          patient_id: string
+          status: Database["public"]["Enums"]["referral_status"]
+          type: string
+        }
+        Insert: {
+          appointment_id?: string | null
+          comment?: string | null
+          created_at?: string
+          doctor_id: string
+          id?: string
+          patient_id: string
+          status?: Database["public"]["Enums"]["referral_status"]
+          type: string
+        }
+        Update: {
+          appointment_id?: string | null
+          comment?: string | null
+          created_at?: string
+          doctor_id?: string
+          id?: string
+          patient_id?: string
+          status?: Database["public"]["Enums"]["referral_status"]
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "referrals_appointment_id_fkey"
+            columns: ["appointment_id"]
+            isOneToOne: false
+            referencedRelation: "appointments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_doctor_id_fkey"
+            columns: ["doctor_id"]
+            isOneToOne: false
+            referencedRelation: "doctors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "referrals_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
@@ -293,6 +383,7 @@ export type Database = {
     }
     Functions: {
       appt_patient: { Args: { _appointment_id: string }; Returns: string }
+      can_view_lab_file: { Args: { _path: string }; Returns: boolean }
       can_view_medcard: { Args: { _patient_id: string }; Returns: boolean }
       cancel_my_appointment: { Args: { _id: string }; Returns: undefined }
       doctor_has_patient: { Args: { _patient_id: string }; Returns: boolean }
@@ -317,6 +408,7 @@ export type Database = {
       is_appt_doctor: { Args: { _appointment_id: string }; Returns: boolean }
       is_own_doctor: { Args: { _doctor_id: string }; Returns: boolean }
       is_own_patient: { Args: { _patient_id: string }; Returns: boolean }
+      referral_patient: { Args: { _referral_id: string }; Returns: string }
     }
     Enums: {
       app_role:
@@ -336,6 +428,7 @@ export type Database = {
         | "cancelled"
         | "no_show"
         | "rescheduled"
+      referral_status: "open" | "completed" | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -482,6 +575,7 @@ export const Constants = {
         "no_show",
         "rescheduled",
       ],
+      referral_status: ["open", "completed", "cancelled"],
     },
   },
 } as const
