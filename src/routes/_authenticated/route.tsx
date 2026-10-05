@@ -26,6 +26,8 @@ const NAV: { to: string; label: string; icon: typeof Users; roles: AppRole[] | n
   { to: "/my-appointments", label: "Мои приёмы", icon: ClipboardList, roles: ["doctor"] },
   { to: "/medcard", label: "Медкарты", icon: FolderHeart, roles: ["doctor", "nurse", "admin", "patient"] },
   { to: "/lab", label: "Лаборатория", icon: FlaskConical, roles: ["lab"] },
+  { to: "/hospital", label: "Стационар", icon: BedDouble, roles: ["registrar", "admin", "doctor", "nurse", "patient"] },
+  { to: "/reports", label: "Отчёты", icon: BarChart3, roles: ["admin", "manager"] },
   { to: "/doctors", label: "Врачи и отделения", icon: Stethoscope, roles: ["admin"] },
   { to: "/users", label: "Пользователи", icon: UserCog, roles: ["admin"] },
 ];
