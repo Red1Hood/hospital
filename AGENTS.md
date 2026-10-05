@@ -16,3 +16,8 @@
 - Signup trigger: first user becomes admin; later users become patients with a linked `patients` row.
 - Double booking is prevented by a partial unique index on appointments(doctor_id, scheduled_at) excluding cancelled/rescheduled; free slots come from doctor_schedules minus the security-definer get_busy_slots RPC.
 - Doctors link to login accounts via doctors.user_id; doctor-scoped RLS uses is_own_doctor/is_own_patient helpers.
+- Medical card access is centralised in can_view_medcard (own patient, doctor with an appointment, nurse, admin); visits/referrals/lab results reuse it in RLS.
+- Lab results: inserting a lab_result auto-closes its referral via trigger; files live in the private lab-results bucket under <referral_id>/, gated by can_view_lab_file.
+- Hospitalization: partial unique indexes allow one non-discharged hospitalization per bed and per patient; triggers keep beds.is_occupied in sync (discharge/transfer frees the old bed, bed change sets status transferred).
+- Reports read aggregates through the security-definer report_stats RPC (admin/manager only), so managers need no row-level access to clinical tables.
+- Test accounts (admin/doctor/lab/patient @hospital.test) are seeded via the auth admin API; weak passwords are rejected by leaked-password protection.
