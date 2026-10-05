@@ -36,6 +36,13 @@
       "when": 1791137118110,
       "tag": "0004_referrals_lab_results",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1791227823351,
+      "tag": "0005_hospitalization_reports",
+      "breakpoints": true
     }
   ]
 }

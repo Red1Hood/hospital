@@ -86,6 +86,35 @@ export type Database = {
         }
         Relationships: []
       }
+      beds: {
+        Row: {
+          id: string
+          is_occupied: boolean
+          number: string
+          room_id: string
+        }
+        Insert: {
+          id?: string
+          is_occupied?: boolean
+          number: string
+          room_id: string
+        }
+        Update: {
+          id?: string
+          is_occupied?: boolean
+          number?: string
+          room_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "beds_room_id_fkey"
+            columns: ["room_id"]
+            isOneToOne: false
+            referencedRelation: "rooms"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       departments: {
         Row: {
           created_at: string
@@ -170,6 +199,54 @@ export type Database = {
             columns: ["department_id"]
             isOneToOne: false
             referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hospitalizations: {
+        Row: {
+          admitted_at: string
+          bed_id: string
+          created_at: string
+          created_by: string
+          discharged_at: string | null
+          id: string
+          patient_id: string
+          status: Database["public"]["Enums"]["hospitalization_status"]
+        }
+        Insert: {
+          admitted_at?: string
+          bed_id: string
+          created_at?: string
+          created_by?: string
+          discharged_at?: string | null
+          id?: string
+          patient_id: string
+          status?: Database["public"]["Enums"]["hospitalization_status"]
+        }
+        Update: {
+          admitted_at?: string
+          bed_id?: string
+          created_at?: string
+          created_by?: string
+          discharged_at?: string | null
+          id?: string
+          patient_id?: string
+          status?: Database["public"]["Enums"]["hospitalization_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hospitalizations_bed_id_fkey"
+            columns: ["bed_id"]
+            isOneToOne: false
+            referencedRelation: "beds"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hospitalizations_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
             referencedColumns: ["id"]
           },
         ]
@@ -359,6 +436,38 @@ export type Database = {
           },
         ]
       }
+      rooms: {
+        Row: {
+          capacity: number
+          created_at: string
+          department_id: string | null
+          id: string
+          number: string
+        }
+        Insert: {
+          capacity?: number
+          created_at?: string
+          department_id?: string | null
+          id?: string
+          number: string
+        }
+        Update: {
+          capacity?: number
+          created_at?: string
+          department_id?: string | null
+          id?: string
+          number?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rooms_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
@@ -409,6 +518,7 @@ export type Database = {
       is_own_doctor: { Args: { _doctor_id: string }; Returns: boolean }
       is_own_patient: { Args: { _patient_id: string }; Returns: boolean }
       referral_patient: { Args: { _referral_id: string }; Returns: string }
+      report_stats: { Args: { _from: string }; Returns: Json }
     }
     Enums: {
       app_role:
@@ -428,6 +538,11 @@ export type Database = {
         | "cancelled"
         | "no_show"
         | "rescheduled"
+      hospitalization_status:
+        | "awaiting"
+        | "admitted"
+        | "transferred"
+        | "discharged"
       referral_status: "open" | "completed" | "cancelled"
     }
     CompositeTypes: {
@@ -574,6 +689,12 @@ export const Constants = {
         "cancelled",
         "no_show",
         "rescheduled",
+      ],
+      hospitalization_status: [
+        "awaiting",
+        "admitted",
+        "transferred",
+        "discharged",
       ],
       referral_status: ["open", "completed", "cancelled"],
     },
