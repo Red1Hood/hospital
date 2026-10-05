@@ -15,9 +15,11 @@ import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AuthenticatedBookingRouteImport } from './routes/_authenticated/booking'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDoctorsRouteImport } from './routes/_authenticated/doctors'
+import { Route as AuthenticatedHospitalRouteImport } from './routes/_authenticated/hospital'
 import { Route as AuthenticatedLabRouteImport } from './routes/_authenticated/lab'
 import { Route as AuthenticatedMyAppointmentsRouteImport } from './routes/_authenticated/my-appointments'
 import { Route as AuthenticatedPatientsRouteImport } from './routes/_authenticated/patients'
+import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
 import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
 import { Route as AuthenticatedMedcardIndexRouteImport } from './routes/_authenticated/medcard.index'
 import { Route as AuthenticatedMedcardPatientIdRouteImport } from './routes/_authenticated/medcard.$patientId'
@@ -52,6 +54,11 @@ const AuthenticatedDoctorsRoute = AuthenticatedDoctorsRouteImport.update({
   path: '/doctors',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedHospitalRoute = AuthenticatedHospitalRouteImport.update({
+  id: '/hospital',
+  path: '/hospital',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedLabRoute = AuthenticatedLabRouteImport.update({
   id: '/lab',
   path: '/lab',
@@ -66,6 +73,11 @@ const AuthenticatedMyAppointmentsRoute =
 const AuthenticatedPatientsRoute = AuthenticatedPatientsRouteImport.update({
   id: '/patients',
   path: '/patients',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedReportsRoute = AuthenticatedReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedUsersRoute = AuthenticatedUsersRouteImport.update({
@@ -98,9 +110,11 @@ export interface FileRoutesByFullPath {
   '/booking': typeof AuthenticatedBookingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/doctors': typeof AuthenticatedDoctorsRoute
+  '/hospital': typeof AuthenticatedHospitalRoute
   '/lab': typeof AuthenticatedLabRoute
   '/my-appointments': typeof AuthenticatedMyAppointmentsRoute
   '/patients': typeof AuthenticatedPatientsRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/users': typeof AuthenticatedUsersRoute
   '/medcard/$patientId': typeof AuthenticatedMedcardPatientIdRoute
   '/visit/$appointmentId': typeof AuthenticatedVisitAppointmentIdRoute
@@ -112,9 +126,11 @@ export interface FileRoutesByTo {
   '/booking': typeof AuthenticatedBookingRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/doctors': typeof AuthenticatedDoctorsRoute
+  '/hospital': typeof AuthenticatedHospitalRoute
   '/lab': typeof AuthenticatedLabRoute
   '/my-appointments': typeof AuthenticatedMyAppointmentsRoute
   '/patients': typeof AuthenticatedPatientsRoute
+  '/reports': typeof AuthenticatedReportsRoute
   '/users': typeof AuthenticatedUsersRoute
   '/medcard/$patientId': typeof AuthenticatedMedcardPatientIdRoute
   '/visit/$appointmentId': typeof AuthenticatedVisitAppointmentIdRoute
@@ -128,9 +144,11 @@ export interface FileRoutesById {
   '/_authenticated/booking': typeof AuthenticatedBookingRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/doctors': typeof AuthenticatedDoctorsRoute
+  '/_authenticated/hospital': typeof AuthenticatedHospitalRoute
   '/_authenticated/lab': typeof AuthenticatedLabRoute
   '/_authenticated/my-appointments': typeof AuthenticatedMyAppointmentsRoute
   '/_authenticated/patients': typeof AuthenticatedPatientsRoute
+  '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/users': typeof AuthenticatedUsersRoute
   '/_authenticated/medcard/$patientId': typeof AuthenticatedMedcardPatientIdRoute
   '/_authenticated/visit/$appointmentId': typeof AuthenticatedVisitAppointmentIdRoute
@@ -144,9 +162,11 @@ export interface FileRouteTypes {
     | '/booking'
     | '/dashboard'
     | '/doctors'
+    | '/hospital'
     | '/lab'
     | '/my-appointments'
     | '/patients'
+    | '/reports'
     | '/users'
     | '/medcard/$patientId'
     | '/visit/$appointmentId'
@@ -158,9 +178,11 @@ export interface FileRouteTypes {
     | '/booking'
     | '/dashboard'
     | '/doctors'
+    | '/hospital'
     | '/lab'
     | '/my-appointments'
     | '/patients'
+    | '/reports'
     | '/users'
     | '/medcard/$patientId'
     | '/visit/$appointmentId'
@@ -173,9 +195,11 @@ export interface FileRouteTypes {
     | '/_authenticated/booking'
     | '/_authenticated/dashboard'
     | '/_authenticated/doctors'
+    | '/_authenticated/hospital'
     | '/_authenticated/lab'
     | '/_authenticated/my-appointments'
     | '/_authenticated/patients'
+    | '/_authenticated/reports'
     | '/_authenticated/users'
     | '/_authenticated/medcard/$patientId'
     | '/_authenticated/visit/$appointmentId'
@@ -232,6 +256,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDoctorsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/hospital': {
+      id: '/_authenticated/hospital'
+      path: '/hospital'
+      fullPath: '/hospital'
+      preLoaderRoute: typeof AuthenticatedHospitalRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/lab': {
       id: '/_authenticated/lab'
       path: '/lab'
@@ -251,6 +282,13 @@ declare module '@tanstack/react-router' {
       path: '/patients'
       fullPath: '/patients'
       preLoaderRoute: typeof AuthenticatedPatientsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/reports': {
+      id: '/_authenticated/reports'
+      path: '/reports'
+      fullPath: '/reports'
+      preLoaderRoute: typeof AuthenticatedReportsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/users': {
@@ -288,9 +326,11 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedBookingRoute: typeof AuthenticatedBookingRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDoctorsRoute: typeof AuthenticatedDoctorsRoute
+  AuthenticatedHospitalRoute: typeof AuthenticatedHospitalRoute
   AuthenticatedLabRoute: typeof AuthenticatedLabRoute
   AuthenticatedMyAppointmentsRoute: typeof AuthenticatedMyAppointmentsRoute
   AuthenticatedPatientsRoute: typeof AuthenticatedPatientsRoute
+  AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedUsersRoute: typeof AuthenticatedUsersRoute
   AuthenticatedMedcardPatientIdRoute: typeof AuthenticatedMedcardPatientIdRoute
   AuthenticatedVisitAppointmentIdRoute: typeof AuthenticatedVisitAppointmentIdRoute
@@ -301,9 +341,11 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBookingRoute: AuthenticatedBookingRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDoctorsRoute: AuthenticatedDoctorsRoute,
+  AuthenticatedHospitalRoute: AuthenticatedHospitalRoute,
   AuthenticatedLabRoute: AuthenticatedLabRoute,
   AuthenticatedMyAppointmentsRoute: AuthenticatedMyAppointmentsRoute,
   AuthenticatedPatientsRoute: AuthenticatedPatientsRoute,
+  AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedUsersRoute: AuthenticatedUsersRoute,
   AuthenticatedMedcardPatientIdRoute: AuthenticatedMedcardPatientIdRoute,
   AuthenticatedVisitAppointmentIdRoute: AuthenticatedVisitAppointmentIdRoute,
