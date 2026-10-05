@@ -12,11 +12,11 @@ export const Route = createFileRoute("/api/seed-test-users")({
     ];
     const out: Record<string, string> = {};
     for (const [email, name] of users) {
-      let pw = "12345";
+      let pw = "Hosp-Test-2026";
       let res = await supabaseAdmin.auth.admin.createUser({ email, password: pw, email_confirm: true, user_metadata: { full_name: name } });
       if (res.error) {
         out[email + "_first"] = res.error.message;
-        pw = "123456";
+        pw = "Hospital#2026";
         res = await supabaseAdmin.auth.admin.createUser({ email, password: pw, email_confirm: true, user_metadata: { full_name: name } });
       }
       out[email] = res.error ? `ERROR ${res.error.message}` : `ok pw=${pw}`;
