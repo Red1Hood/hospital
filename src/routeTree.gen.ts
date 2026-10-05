@@ -19,6 +19,7 @@ import { Route as AuthenticatedLabRouteImport } from './routes/_authenticated/la
 import { Route as AuthenticatedMyAppointmentsRouteImport } from './routes/_authenticated/my-appointments'
 import { Route as AuthenticatedPatientsRouteImport } from './routes/_authenticated/patients'
 import { Route as AuthenticatedUsersRouteImport } from './routes/_authenticated/users'
+import { Route as ApiSeedTestUsersRouteImport } from './routes/api/seed-test-users'
 import { Route as AuthenticatedMedcardIndexRouteImport } from './routes/_authenticated/medcard.index'
 import { Route as AuthenticatedMedcardPatientIdRouteImport } from './routes/_authenticated/medcard.$patientId'
 import { Route as AuthenticatedVisitAppointmentIdRouteImport } from './routes/_authenticated/visit.$appointmentId'
@@ -73,6 +74,11 @@ const AuthenticatedUsersRoute = AuthenticatedUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const ApiSeedTestUsersRoute = ApiSeedTestUsersRouteImport.update({
+  id: '/api/seed-test-users',
+  path: '/api/seed-test-users',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedMedcardIndexRoute =
   AuthenticatedMedcardIndexRouteImport.update({
     id: '/medcard/',
@@ -102,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/my-appointments': typeof AuthenticatedMyAppointmentsRoute
   '/patients': typeof AuthenticatedPatientsRoute
   '/users': typeof AuthenticatedUsersRoute
+  '/api/seed-test-users': typeof ApiSeedTestUsersRoute
   '/medcard/$patientId': typeof AuthenticatedMedcardPatientIdRoute
   '/visit/$appointmentId': typeof AuthenticatedVisitAppointmentIdRoute
   '/medcard/': typeof AuthenticatedMedcardIndexRoute
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/my-appointments': typeof AuthenticatedMyAppointmentsRoute
   '/patients': typeof AuthenticatedPatientsRoute
   '/users': typeof AuthenticatedUsersRoute
+  '/api/seed-test-users': typeof ApiSeedTestUsersRoute
   '/medcard/$patientId': typeof AuthenticatedMedcardPatientIdRoute
   '/visit/$appointmentId': typeof AuthenticatedVisitAppointmentIdRoute
   '/medcard': typeof AuthenticatedMedcardIndexRoute
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/_authenticated/my-appointments': typeof AuthenticatedMyAppointmentsRoute
   '/_authenticated/patients': typeof AuthenticatedPatientsRoute
   '/_authenticated/users': typeof AuthenticatedUsersRoute
+  '/api/seed-test-users': typeof ApiSeedTestUsersRoute
   '/_authenticated/medcard/$patientId': typeof AuthenticatedMedcardPatientIdRoute
   '/_authenticated/visit/$appointmentId': typeof AuthenticatedVisitAppointmentIdRoute
   '/_authenticated/medcard/': typeof AuthenticatedMedcardIndexRoute
@@ -148,6 +157,7 @@ export interface FileRouteTypes {
     | '/my-appointments'
     | '/patients'
     | '/users'
+    | '/api/seed-test-users'
     | '/medcard/$patientId'
     | '/visit/$appointmentId'
     | '/medcard/'
@@ -162,6 +172,7 @@ export interface FileRouteTypes {
     | '/my-appointments'
     | '/patients'
     | '/users'
+    | '/api/seed-test-users'
     | '/medcard/$patientId'
     | '/visit/$appointmentId'
     | '/medcard'
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
     | '/_authenticated/my-appointments'
     | '/_authenticated/patients'
     | '/_authenticated/users'
+    | '/api/seed-test-users'
     | '/_authenticated/medcard/$patientId'
     | '/_authenticated/visit/$appointmentId'
     | '/_authenticated/medcard/'
@@ -186,6 +198,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ApiSeedTestUsersRoute: typeof ApiSeedTestUsersRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -260,6 +273,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedUsersRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/seed-test-users': {
+      id: '/api/seed-test-users'
+      path: '/api/seed-test-users'
+      fullPath: '/api/seed-test-users'
+      preLoaderRoute: typeof ApiSeedTestUsersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/medcard/': {
       id: '/_authenticated/medcard/'
       path: '/medcard'
@@ -317,6 +337,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  ApiSeedTestUsersRoute: ApiSeedTestUsersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
