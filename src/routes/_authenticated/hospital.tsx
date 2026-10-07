@@ -135,7 +135,7 @@ function HospitalPage() {
                   <select className={`${sel} w-44`} value={moveTo[h.id] ?? ""} onChange={(e) => setMoveTo({ ...moveTo, [h.id]: e.target.value })}>
                     <option value="">Перевести на…</option>{freeBeds.map((b) => <option key={b.id} value={b.id}>Пал. {roomNo(b.room_id)}, к. {b.number}</option>)}
                   </select>
-                  <Button size="sm" variant="outline" disabled={!moveTo[h.id]} onClick={() => run(supabase.from("hospitalizations").update({ bed_id: moveTo[h.id] }).eq("id", h.id), "Пациент переведён")}>Перевести</Button>
+                  <Button size="sm" variant="outline" disabled={!moveTo[h.id]} onClick={() => run(supabase.from("hospitalizations").update({ bed_id: moveTo[h.id] ?? "" }).eq("id", h.id), "Пациент переведён")}>Перевести</Button>
                   <Button size="sm" onClick={() => run(supabase.from("hospitalizations").update({ status: "discharged" }).eq("id", h.id), "Пациент выписан, койка освобождена")}>Выписать</Button>
                 </>
               )}
