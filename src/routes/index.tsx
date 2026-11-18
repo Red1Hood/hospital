@@ -32,7 +32,7 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "google-site-verification", content: "OjXOcLuZs8pQ8Wy9a8nSvVFHsXuHDdXWBkoCi-oC6Cs" },
+      { name: "google-site-verification", content: "ANrRLDMl7OFFZdVGEwBEejSZJz1e7MR9N6uTxYWPBA0" },
     ],
   }),
   component: Index,
