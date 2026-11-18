@@ -34,7 +34,7 @@ export const Route = createFileRoute("/")({
       { name: "twitter:card", content: "summary_large_image" },
       
       // Тот самый тег подтверждения для Google
-      { name: "google-site-verification", content: "_b-PqEnLyHM4_U-BjfVaRJE89s0ihUSwTOfyUu1ulkM" },
+      { name: "google-site-verification", content: "OjXOcLuZs8pQ8Wy9a8nSvVFHsXuHDdXWBkoCi-oC6Cs" },
     ],
   }),
   component: Index,
