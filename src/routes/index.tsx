@@ -32,48 +32,7 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      
-      // Твой актуальный тег подтверждения Google:
       { name: "google-site-verification", content: "OjXOcLuZs8pQ8Wy9a8nSvVFHsXuHDdXWBkoCi-oC6Cs" },
-    ],
-  }),
-  component: Index,
-});
-
-import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  UserPlus,
-  Stethoscope,
-  CalendarClock,
-  ClipboardList,
-  FolderHeart,
-  FlaskConical,
-  BedDouble,
-  BarChart3,
-  ArrowRight,
-  ShieldCheck,
-  Zap,
-  FileCheck,
-} from "lucide-react";
-import doctorImage from "@/assets/doctor.jpg";
-
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "АИС «Больница» — автоматизация медицинского учреждения" },
-      {
-        name: "description",
-        content:
-          "Автоматизированная информационная система больницы: регистрация пациентов, запись на приём, электронные медицинские карты, госпитализация, лаборатория и отчётность — в одной платформе.",
-      },
-      { property: "og:title", content: "АИС «Больница» — автоматизация медицинского учреждения" },
-      {
-        property: "og:description",
-        content:
-          "Регистрация пациентов, расписание врачей, электронные медкарты, госпитализация и отчётность — единая цифровая платформа больницы.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
