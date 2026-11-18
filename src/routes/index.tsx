@@ -33,7 +33,7 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       
-      // Тот самый тег подтверждения для Google
+      // Твой актуальный тег подтверждения Google:
       { name: "google-site-verification", content: "OjXOcLuZs8pQ8Wy9a8nSvVFHsXuHDdXWBkoCi-oC6Cs" },
     ],
   }),
